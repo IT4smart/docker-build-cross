@@ -1,8 +1,8 @@
 version: 2
 jobs:
-    docker:
-        - image: circleci/php:7.0.22-apache-node
     build:
+        docker:
+            - image: circleci/php:7.0.22-apache-node
     working_directory: ~/app
     steps:
         - checkout
