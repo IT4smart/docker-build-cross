@@ -1,13 +1,10 @@
 version: 2
 jobs:
     build:
-        docker:
-            - image: circleci/php:7.0.22-apache-node
-    working_directory: ~/app
-    steps:
+        machine: true
+        working_directory: ~/app
+        steps:
         - checkout
-        - setup_remote_docker:
-            docker_layer_caching: true
         - run:
             name: Build Docker image
             command: |
