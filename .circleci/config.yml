@@ -2,13 +2,14 @@ version: 2
 jobs:
     build-debian-stretch:
         machine: true
-        working_directory: ~/app/debian-stretch
+        working_directory: ~/app
         steps:
         - checkout
         - run:
             name: Build Docker image
             command: |
                 export GIT_COMMIT=$(git rev-parse --short HEAD)
+                cd debian-stretch
                 docker build --file debian-stretch-cross.dockerfile -t debian-stretch-cross:$GIT_COMMIT .
         
         - run:
