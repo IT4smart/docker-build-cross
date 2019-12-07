@@ -1,14 +1,22 @@
 version: 2
 jobs:
-    build:
+    build-debian-stretch:
         machine: true
-        working_directory: ~/app
+        working_directory: ~/app/debian-stretch
         steps:
         - checkout
         - run:
             name: Build Docker image
             command: |
-                docker build --file debian-jessie-cross.dockerfile -t debian-jessie-cross .
+                export GIT_COMMIT=$(git rev-parse --short HEAD)
+                docker build --file debian-stretch-cross.dockerfile -t debian-stretch-cross:$GIT_COMMIT .
+        
+        - run:
+            name: Push to DockerHub
+            command: |
+                export GIT_COMMIT=$(git rev-parse --short HEAD)
+                docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
+                docker push it4smart/debian-stretch-cross:$GIT_COMMIT
 
 workflows:
     version: 2
