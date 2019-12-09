@@ -10,7 +10,6 @@ COPY apt.sources.list.debian /etc/apt/sources.lis
 RUN dpkg --add-architecture armel && \
     dpkg --add-architecture armhf && \
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys D57D95AF93178A7C && \
-    #apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 7DE089671804772E && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
         bash-completion \
@@ -30,7 +29,10 @@ RUN dpkg --add-architecture armel && \
         wget \
         xz-utils \
         fakeroot \
-        git
+        git \
+        build-essential \
+        debhelper \
+        dh-systemd
 
 # setup a new user
 COPY compiler.sudoers /etc/sudoers.d/compiler
