@@ -2,7 +2,7 @@ FROM debian:stretch-slim
 
 RUN apt-get update && \
     apt-get install --no-install-recommends --yes \
-        gnupg \
+        gnupg2 \
         dirmngr
 
 # setup repositories and install required packages
