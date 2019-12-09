@@ -10,7 +10,7 @@ jobs:
             command: |
                 export GIT_COMMIT=$(git rev-parse --short HEAD)
                 cd debian-stretch
-                docker build --file debian-stretch-cross.dockerfile -t debian-stretch-cross:$GIT_COMMIT .
+                docker build --file debian-stretch-cross.dockerfile -t it4smart/debian-stretch-cross:$GIT_COMMIT .
         
         - run:
             name: Push to DockerHub
