@@ -12,16 +12,16 @@ jobs:
         - run:
             name: Build Docker image
             command: |
-                export GIT_COMMIT=$(git rev-parse --short HEAD)
+                export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
                 cd debian-stretch
-                docker build --file debian-stretch-cross.dockerfile -t it4smart/debian-stretch-cross:$GIT_COMMIT .
+                docker build --file debian-stretch-cross.dockerfile -t it4smart/debian-stretch-cross:$GIT_TAG .
         
         - run:
             name: Push to DockerHub
             command: |
-                export GIT_COMMIT=$(git rev-parse --short HEAD)
+                export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
                 docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
-                docker push it4smart/debian-stretch-cross:$GIT_COMMIT
+                docker push it4smart/debian-stretch-cross:$GIT_TAG
 
 workflows:
     version: 2
