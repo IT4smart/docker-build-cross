@@ -29,7 +29,8 @@ RUN dpkg --add-architecture armel && \
         vim \
         wget \
         xz-utils \
-        fakeroot
+        fakeroot \
+        git
 
 # setup a new user
 COPY compiler.sudoers /etc/sudoers.d/compiler
