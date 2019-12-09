@@ -1,6 +1,10 @@
+defaults: &defaults
+  working_directory: /tmp
+
 version: 2
 jobs:
     build-debian-stretch:
+        <<: *defaults
         machine: true
         working_directory: ~/app
         steps:
@@ -21,9 +25,9 @@ jobs:
 
 workflows:
     version: 2
-    build-deploy:
+    release:
         jobs:
-            - build-debian-stretch
+            - build-debian-stretch:
                 filters:
                     branches:
                         ignore: /.*/
