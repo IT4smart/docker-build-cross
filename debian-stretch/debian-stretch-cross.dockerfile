@@ -32,7 +32,8 @@ RUN dpkg --add-architecture armel && \
         git \
         build-essential \
         debhelper \
-        dh-systemd
+        dh-systemd \
+        openssh-client
 
 # setup a new user
 COPY compiler.sudoers /etc/sudoers.d/compiler
