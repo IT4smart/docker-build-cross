@@ -1,15 +1,11 @@
 FROM debian:stretch-slim
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends --yes \
-        gnupg2 \
-        dirmngr
+COPY ev3dev-archive-keyring.gpg /etc/apt/trusted.gpg.d/
 
 # setup repositories and install required packages
 COPY apt.sources.list.debian /etc/apt/sources.lis
 RUN dpkg --add-architecture armel && \
     dpkg --add-architecture armhf && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys D57D95AF93178A7C && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
         bash-completion \
