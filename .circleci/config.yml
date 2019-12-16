@@ -23,11 +23,37 @@ jobs:
                 docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
                 docker push it4smart/debian-stretch-cross:$GIT_TAG
 
+    build-debian-buster:
+        <<: *defaults
+        machine: true
+        working_directory: ~/app
+        steps:
+            - checkout
+            - run:
+                name: Build Docker image
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    cd debian-buster
+                    docker build --file debian-buster-cross.dockerfile -t it4smart/debian-buster-cross:$GIT_TAG .
+                    
+            - run:
+                name: Push to DockerHub
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
+                    docker push it4smart/debian-buster-cross:$GIT_TAG
+
 workflows:
     version: 2
     release:
         jobs:
             - build-debian-stretch:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /v[0-9]+\.[0-9]+\.[0-9]+/
+            - build-debian-buster:
                 filters:
                     branches:
                         ignore: /.*/
