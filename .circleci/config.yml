@@ -43,6 +43,48 @@ jobs:
                     docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
                     docker push it4smart/debian-buster-cross:$GIT_TAG
 
+    build-debian-jessie:
+        <<: *defaults
+        machine: true
+        working_directory: ~/app
+        steps:
+            - checkout
+            - run:
+                name: Build Docker image
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    cd debian-jessie
+                    docker build --file debian-jessie-cross.dockerfile -t it4smart/debian-jessie-cross:$GIT_TAG .
+                                    
+            - run:
+                name: Push to DockerHub
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
+                    docker push it4smart/debian-jessie-cross:$GIT_TAG
+
+    build-debian-jessie-snapshot:
+        <<: *defaults
+        machine: true
+        working_directory: ~/app
+        steps:
+            - checkout
+            - run:
+                name: Build Docker image
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    export GIT_COMMIT=${CIRCLECI_SHA1:0:7}
+                    cd debian-jessie
+                    docker build --file debian-jessie-cross.dockerfile -t it4smart/debian-jessie-cross:$GIT_TAG-$GIT_COMMIT .
+                                                    
+            - run:
+                name: Push to DockerHub
+                command: |
+                    export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+                    export GIT_COMMIT=${CIRCLECI_SHA1:0:7}
+                    docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
+                    docker push it4smart/debian-jessie-cross:$GIT_TAG-$GIT_COMMIT
+
 workflows:
     version: 2
     release:
@@ -59,3 +101,15 @@ workflows:
                         ignore: /.*/
                     tags:
                         only: /v[0-9]+\.[0-9]+\.[0-9]+/
+            - build-debian-jessie:
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                         only: /v[0-9]+\.[0-9]+\.[0-9]+/
+    snapshot:
+        jobs:
+            - build-debian-jessie-snapshot:
+                filters:
+                    tags:
+                        ignore: /v[0-9]+\.[0-9]+\.[0-9]+/
