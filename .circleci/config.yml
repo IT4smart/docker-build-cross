@@ -61,7 +61,7 @@ jobs:
                 name: Push to DockerHub
                 command: |
                     export GIT_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-                    export GIT_COMMIT=${CIRCLECI_SHA1:0:7}
+                    export GIT_COMMIT=${CIRCLE_SHA1:0:7}
                     docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
                     docker push it4smart/debian-stretch-cross:$GIT_TAG-$GIT_COMMIT
 
