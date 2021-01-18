@@ -14,9 +14,10 @@ jobs:
               with:
                 dockerfile: debian-stretch/debian-stretch-cross.dockerfile
             - name: Invoke build job
-              uses: benc-uk/workflow-dispatch@v1
+              uses: mvasign/dispatch-action@main
               with:
-                workflow: DockerImage
+                repo: docker-build-cross
+                event_type: build
                 token: ${{ secrets.PERSONAL_TOKEN }}
     lint-debian-buster:
         runs-on: ubuntu-latest
