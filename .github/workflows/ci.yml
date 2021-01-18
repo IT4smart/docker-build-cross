@@ -17,6 +17,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - uses: brpaz/hadolint-actio@v1.2.1
+            - uses: brpaz/hadolint-action@v1.2.1
               with:
                 dockerfile: debian-buster/debian-buster-cross.dockerfile
