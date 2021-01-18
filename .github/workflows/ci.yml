@@ -14,7 +14,7 @@ jobs:
               with:
                 dockerfile: debian-stretch/debian-stretch-cross.dockerfile
             - name: Invoke build job
-              uses: mvasign/dispatch-action@main
+              uses: mvasigh/dispatch-action@main
               with:
                 repo: docker-build-cross
                 event_type: build
