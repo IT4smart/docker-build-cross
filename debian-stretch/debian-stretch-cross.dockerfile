@@ -41,6 +41,6 @@ RUN chmod 0440 /etc/sudoers.d/compiler && \
 
 USER compiler
 WORKDIR /home/compiler
-CMD ["/bin/bash"] ["--login"]
+CMD ["/bin/bash", "--login"]
 
 ADD ["toolchain-*.cmake", "/home/compiler/"]
