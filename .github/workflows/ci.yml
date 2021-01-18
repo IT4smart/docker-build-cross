@@ -18,6 +18,7 @@ jobs:
               with:
                 repo: docker-build-cross
                 event_type: build
+                owner: IT4smart
                 token: ${{ secrets.PERSONAL_TOKEN }}
     lint-debian-buster:
         runs-on: ubuntu-latest
