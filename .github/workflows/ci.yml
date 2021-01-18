@@ -13,6 +13,11 @@ jobs:
             - uses: brpaz/hadolint-action@v1.2.1
               with:
                 dockerfile: debian-stretch/debian-stretch-cross.dockerfile
+            - name: Invoke build job
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                workflow: DockerImage
+                token: ${{ secrets.PERSONAL_TOKEN }}
     lint-debian-buster:
         runs-on: ubuntu-latest
         steps:
