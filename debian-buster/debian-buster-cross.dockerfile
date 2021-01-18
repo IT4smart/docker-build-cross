@@ -35,10 +35,12 @@ RUN dpkg --add-architecture armel && \
 COPY compiler.sudoers /etc/sudoers.d/compiler
 RUN chmod 0440 /etc/sudoers.d/compiler && \
     adduser --disabled-password --gecos \"\" compiler && \
-    usermod -a -G sudo compiler
+    usermod -a -G sudo compiler \
+    && mkdir /__w \
+    && chown -R compiler:compiler /__w
 
 USER compiler
 WORKDIR /home/compiler
-CMD ["/bin/bash"] ["--login"]
+CMD ["/bin/bash", "--login"]
 
-ADD ["toolchain-*.cmake", "/home/compiler/"]
+COPY ["toolchain-*.cmake", "/home/compiler/"]
