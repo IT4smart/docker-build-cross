@@ -12,7 +12,7 @@ jobs:
             - uses: actions/checkout@v2
             - name: Set release tag
               run: |
-                echo "::set-env RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
+                echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
             - name: Setup QEMU
               uses: docker/setup-qemu-action@v1
             - name: Setup Docker Buildx
@@ -37,7 +37,7 @@ jobs:
             - uses: actions/checkout@v2
             - name: Set release tag
               run: |
-                echo "::set-env RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
+                echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
             - name: Setup QEMU
               uses: docker/setup-qemu-action@v1
             - name: Setup Docker Buildx
