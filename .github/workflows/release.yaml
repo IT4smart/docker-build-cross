@@ -10,6 +10,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - name: Set release tag
+              run: |
+                echo "::set-env RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
             - name: Setup QEMU
               uses: docker/setup-qemu-action@v1
             - name: Setup Docker Buildx
@@ -26,12 +29,15 @@ jobs:
                 file: debian-stretch/debian-stretch-cross.dockerfile
                 platforms: linux/amd64
                 push: true
-                tags: it4smart/debian-stretch-cross:${{ env.GITHUB_REF/refs\/tags\// }}
+                tags: it4smart/debian-stretch-cross:${{ env.RELEASE_TAG }}
 
     release-x64-debian-buster:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - name: Set release tag
+              run: |
+                echo "::set-env RELEASE_TAG=${GITHUB_REF/refs\/tags\//}"
             - name: Setup QEMU
               uses: docker/setup-qemu-action@v1
             - name: Setup Docker Buildx
@@ -48,5 +54,5 @@ jobs:
                 file: debian-buster/debian-buster-cross.dockerfile
                 platforms: linux/amd64
                 push: true
-                tags: it4smart/debian-buster-cross:${{ env.GITHUB_REF/refs\/tags\// }}
+                tags: it4smart/debian-buster-cross:${{ env.RELEASE_TAG }}
   
