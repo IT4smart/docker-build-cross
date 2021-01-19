@@ -3,7 +3,7 @@ FROM debian:buster-slim
 COPY ev3dev-archive-keyring.gpg /etc/apt/trusted.gpg.d/
 
 # setup repositories and install required packages
-COPY apt.sources.list.debian /etc/apt/sources.lis
+COPY apt.sources.list.debian /etc/apt/sources.list
 RUN dpkg --add-architecture armel && \
     dpkg --add-architecture armhf && \
     apt-get update && \

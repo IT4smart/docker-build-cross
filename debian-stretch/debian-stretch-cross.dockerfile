@@ -3,10 +3,10 @@ FROM debian:stretch-slim
 COPY ev3dev-archive-keyring.gpg /etc/apt/trusted.gpg.d/
 
 # setup repositories and install required packages
-COPY apt.sources.list.debian /etc/apt/sources.lis
+COPY apt.sources.list.debian /etc/apt/sources.list
 RUN dpkg --add-architecture armel && \
     dpkg --add-architecture armhf && \
-    && echo "deb http://deb.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list \
+    echo "deb http://deb.debian.org/debian buster-backports main" > /etc/apt/sources.list.d/backports.list \
     && apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
         bash-completion \
