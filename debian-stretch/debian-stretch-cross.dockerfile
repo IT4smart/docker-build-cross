@@ -29,7 +29,9 @@ RUN dpkg --add-architecture armel && \
         build-essential \
         debhelper \
         dh-systemd \
-        openssh-client
+        openssh-client \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # setup a new user
 COPY compiler.sudoers /etc/sudoers.d/compiler
@@ -41,6 +43,6 @@ RUN chmod 0440 /etc/sudoers.d/compiler && \
 
 USER compiler
 WORKDIR /home/compiler
-CMD ["/bin/bash"] ["--login"]
+CMD ["/bin/bash", "--login"]
 
-ADD ["toolchain-*.cmake", "/home/compiler/"]
+COPY ["toolchain-*.cmake", "/home/compiler/"]
