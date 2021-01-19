@@ -25,11 +25,12 @@ RUN dpkg --add-architecture armel && \
         wget \
         xz-utils \
         fakeroot \
-        git \
         build-essential \
         debhelper \
         dh-systemd \
         openssh-client \
+    && DEBIAN_FRONTEND=noninteractive apt-get -t stretch-backports install --yes --no-install-recommends \
+        git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
