@@ -30,6 +30,7 @@ RUN dpkg --add-architecture armel && \
         debhelper \
         dh-systemd \
         openssh-client \
+        lsb-release \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

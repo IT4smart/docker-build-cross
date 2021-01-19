@@ -30,6 +30,7 @@ RUN dpkg --add-architecture armel && \
         debhelper \
         dh-systemd \
         openssh-client \
+        lsb-release \
     && DEBIAN_FRONTEND=noninteractive apt-get -t stretch-backports install --yes --no-install-recommends \
         git \
     && apt-get clean \
